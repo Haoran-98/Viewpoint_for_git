@@ -1,0 +1,158 @@
+INFO: 12-09 11:14:05: params.py:43 * 16444 ./examples/cls_ernie_fc_ch.json
+INFO: 12-09 11:14:05: params.py:52 * 16444 {
+    "dataset_reader": {
+        "test_reader": {
+            "config": {
+                "batch_size": 8,
+                "data_path": "./data/test_data",
+                "epoch": 1,
+                "need_data_distribute": false,
+                "need_generate_examples": false,
+                "sampling_rate": 1.0,
+                "shuffle": false
+            },
+            "fields": [
+                {
+                    "data_type": "string",
+                    "max_seq_len": 512,
+                    "name": "text_a",
+                    "need_convert": true,
+                    "padding_id": 0,
+                    "reader": {
+                        "type": "ErnieTextFieldReader"
+                    },
+                    "tokenizer": {
+                        "split_char": " ",
+                        "type": "FullTokenizer",
+                        "unk_token": "[UNK]"
+                    },
+                    "truncation_type": 0,
+                    "vocab_path": "../../models_hub/ernie_3.0_base_ch_dir/vocab.txt"
+                },
+                {
+                    "data_type": "int",
+                    "embedding": null,
+                    "max_seq_len": 1,
+                    "name": "label",
+                    "need_convert": false,
+                    "padding_id": 0,
+                    "reader": {
+                        "type": "ScalarFieldReader"
+                    },
+                    "tokenizer": null,
+                    "truncation_type": 0,
+                    "vocab_path": ""
+                }
+            ],
+            "name": "test_reader",
+            "type": "BasicDataSetReader"
+        },
+        "train_reader": {
+            "config": {
+                "batch_size": 8,
+                "data_path": "./data/train_data",
+                "epoch": 5,
+                "need_data_distribute": true,
+                "need_generate_examples": false,
+                "sampling_rate": 1.0,
+                "shuffle": false
+            },
+            "fields": [
+                {
+                    "data_type": "string",
+                    "max_seq_len": 512,
+                    "name": "text_a",
+                    "need_convert": true,
+                    "padding_id": 0,
+                    "reader": {
+                        "type": "ErnieTextFieldReader"
+                    },
+                    "tokenizer": {
+                        "split_char": " ",
+                        "type": "FullTokenizer",
+                        "unk_token": "[UNK]"
+                    },
+                    "truncation_type": 0,
+                    "vocab_path": "../../models_hub/ernie_3.0_base_ch_dir/vocab.txt"
+                },
+                {
+                    "data_type": "int",
+                    "embedding": null,
+                    "max_seq_len": 1,
+                    "name": "label",
+                    "need_convert": false,
+                    "padding_id": 0,
+                    "reader": {
+                        "type": "ScalarFieldReader"
+                    },
+                    "tokenizer": null,
+                    "truncation_type": 0,
+                    "vocab_path": ""
+                }
+            ],
+            "name": "train_reader",
+            "type": "BasicDataSetReader"
+        }
+    },
+    "model": {
+        "embedding": {
+            "config_path": "../../models_hub/ernie_3.0_base_ch_dir/ernie_config.json"
+        },
+        "is_dygraph": 1,
+        "num_labels": 2,
+        "optimization": {
+            "decr_every_n_nan_or_inf": 2,
+            "decr_ratio": 0.8,
+            "incr_every_n_steps": 100,
+            "incr_ratio": 2.0,
+            "init_loss_scaling": 128,
+            "learning_rate": 5e-05,
+            "use_dynamic_loss_scaling": false,
+            "use_lr_decay": true,
+            "warmup_proportion": 0.1,
+            "warmup_steps": 0,
+            "weight_decay": 0.01
+        },
+        "type": "ErnieClassification"
+    },
+    "trainer": {
+        "PADDLE_IS_FLEET": 1,
+        "PADDLE_PLACE_TYPE": "gpu",
+        "eval_step": 100,
+        "extra_param": {
+            "meta": {
+                "job_type": "text_classification"
+            }
+        },
+        "is_eval_dev": 0,
+        "is_eval_test": 0,
+        "load_checkpoint": "",
+        "load_parameters": "",
+        "output_path": "./output/cls_ernie_3.0_base_fc_ch_dy",
+        "pre_train_model": [
+            {
+                "name": "ernie_3.0_base_ch",
+                "params_path": "../../models_hub/ernie_3.0_base_ch_dir/params"
+            }
+        ],
+        "save_model_step": 200,
+        "train_log_step": 10,
+        "type": "CustomDynamicTrainer",
+        "use_amp": true
+    }
+}
+WARNING: 12-09 11:14:05: register.py:25 * 16444 Key WordsegTokenizer already in registry tokenizer.
+INFO: 12-09 11:14:06: run_trainer.py:98 * 16444 run trainer.... pid = 24088
+INFO: 12-09 11:14:07: run_trainer.py:62 * 16444 Device count: 1
+INFO: 12-09 11:14:07: run_trainer.py:63 * 16444 Num train examples: 28788
+INFO: 12-09 11:14:07: run_trainer.py:64 * 16444 Max train steps: 17992
+INFO: 12-09 11:14:07: run_trainer.py:65 * 16444 Num warmup steps: 1799
+INFO: 12-09 11:14:07: dynamic_trainer.py:107 * 16444 parser meta ....
+INFO: 12-09 11:14:07: dynamic_trainer.py:148 * 16444 pre_train_model's name = ernie_3.0_base_ch
+INFO: 12-09 11:14:07: dynamic_trainer.py:49 * 16444 fleet init ...
+INFO: 12-09 11:14:07: dynamic_trainer.py:59 * 16444 load_pretrain_model...
+INFO: 12-09 11:14:07: dynamic_trainer.py:218 * 16444 load pre_train_model path: ../../models_hub/ernie_3.0_base_ch_dir/params
+INFO: 12-09 11:14:11: custom_dynamic_trainer.py:93 * 16444 epoch 0 progress 121/28788 current learning rate: 3e-07
+INFO: 12-09 11:14:11: base_cls.py:89 * 16444 phase = training loss = 0.6866257786750793 acc = 0.5 precision = 0.5 step = 10 time_cost = 1.8472
+INFO: 12-09 11:14:12: custom_dynamic_trainer.py:93 * 16444 epoch 0 progress 201/28788 current learning rate: 5e-07
+INFO: 12-09 11:14:12: base_cls.py:89 * 16444 phase = training loss = 0.5996332168579102 acc = 1.0 precision = 1.0 step = 20 time_cost = 0.9339
